@@ -1,12 +1,10 @@
 import { BasePage } from './BasePage';
 
 export class LoginPage extends BasePage {
-  // Utilizing the new best-practice role/label helpers directly from BasePage
+  
   private readonly emailInput = this.getByLabel('Email');
   private readonly passwordInput = this.getByLabel('Password');
   private readonly loginButton = this.getByRole('button', { name: 'Sign In' });
-  
-  // Utilizing the escape hatch for a raw selector element if needed
   private readonly alternativeFlash = this.locator('#flash'); 
 
 
@@ -29,4 +27,7 @@ async open(): Promise<void> {
     await this.passwordInput.fill(pass);
     await this.loginButton.click();
   }
+
+
+
 }
