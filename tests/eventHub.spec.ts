@@ -13,6 +13,13 @@ test.describe('EventHub Event Handling E2E Pipeline', () => {
         await expect(dashboardPage.dashboardHeader).toBeVisible();
         
     })
+
+    test('Event Hub e2e', async ({ page }) => {
+
+        await expect(page).toHaveURL('https://eventhub.rahulshettyacademy.com/dashboard');
+        
+    })
+    
     
 
  

@@ -1,19 +1,27 @@
 import { test as base } from '@playwright/test';
-// Fixed the directory paths (assuming standard structure '../pages/')
 import { LoginPage } from '../pages/LoginPage';
 import { DashboardPage } from '../pages/DashboardPage';
+import { AdminPage } from '../pages/AdminPage';
+import { ApiDocsPage } from '../pages/APIDocs';
+import { MyBookingsPage } from '../pages/MyBookings';
+import { EventPage } from '../pages/EventPage';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as XLSX from 'xlsx';
 
-// 1. Types declaration
+// Define the shape of our fixtures for strong typing and IntelliSense
 type AppFixtures = {
   loginPage: LoginPage;
   dashboardPage: DashboardPage;
+  adminPage : AdminPage;
+  apiDocsPage : ApiDocsPage;
+  eventPage: EventPage;
+  myBookingsPage : MyBookingsPage;
   jsonData: any;
   excelData: { Email: string; Password: string }; // Typed properly for excellent IntelliSense
 };
 
+// Extend the base test with our custom fixtures
 export const test = base.extend<AppFixtures>({
   // Page Fixtures
   loginPage: async ({ page }, use) => {
@@ -22,9 +30,20 @@ export const test = base.extend<AppFixtures>({
   dashboardPage: async ({ page }, use) => {
     await use(new DashboardPage(page));
   },
+  adminPage :async ({ page }, use) => {
+    await use(new AdminPage(page));
+  },
+  apiDocsPage:async ({ page }, use) => {
+    await use(new ApiDocsPage(page));
+  },
+  eventPage:async ({ page }, use) => {
+    await use(new EventPage(page));
+  },
+  myBookingsPage:async ({ page }, use) => {
+    await use(new MyBookingsPage(page));
+  },
 
-  // Data Fixture: Reads standard JSON directly
-  // FIXED: Explicitly typed 'use' callback to satisfy strict 'noImplicitAny' rules
+  // Data Fixture: Reads standard JSON directly from the filesystem
   jsonData: async ({}, use: (arg: any) => Promise<void>) => {
     const jsonPath = path.resolve(__dirname, '../data/credentials.json');
     const rawData = fs.readFileSync(jsonPath, 'utf-8');
@@ -32,7 +51,6 @@ export const test = base.extend<AppFixtures>({
   },
 
   // Data Fixture: Reads and parses Excel using 'xlsx'
-  // FIXED: Explicitly typed 'use' with your custom spreadsheet row structure
   excelData: async ({}, use: (arg: { Email: string; Password: string }) => Promise<void>) => {
     const excelPath = path.resolve(__dirname, '../data/credentials.xlsx');
     const workbook = XLSX.readFile(excelPath);
