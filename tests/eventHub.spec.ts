@@ -16,7 +16,7 @@ test.describe('EventHub Event Handling E2E Pipeline', () => {
 
     test('Event Hub e2e', async ({ page }) => {
 
-        await expect(page).toHaveURL('https://eventhub.rahulshettyacademy.com/dashboard');
+        await expect(page).toHaveURL('https://eventhub.rahulshettyacademy.com/');
         
     })
     
