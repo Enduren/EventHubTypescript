@@ -11,19 +11,35 @@ import * as XLSX from 'xlsx';
 
 // Define the shape of our fixtures for strong typing and IntelliSense
 type AppFixtures = {
+  // LoginPage fixture for testing login functionalities
   loginPage: LoginPage;
+
+  // DashboardPage fixture for testing dashboard functionalities
   dashboardPage: DashboardPage;
+
+  // AdminPage fixture for testing admin functionalities
   adminPage : AdminPage;
+
+  // ApiDocsPage fixture for testing API documentation functionalities
   apiDocsPage : ApiDocsPage;
+
+  // EventPage fixture for testing event-related functionalities
   eventPage: EventPage;
+
+  // MyBookingsPage fixture for testing user bookings
   myBookingsPage : MyBookingsPage;
+
+  // JSON data fixture returns any valid JSON object
   jsonData: any;
-  excelData: { Email: string; Password: string }; // Typed properly for excellent IntelliSense
+
+  // Excel data fixture returns an object with Email and Password properties
+  excelData: { Email: string; Password: string }; 
 };
 
 // Extend the base test with our custom fixtures
 export const test = base.extend<AppFixtures>({
   // Page Fixtures
+  // Each fixture initializes a page object and makes it available for tests
   loginPage: async ({ page }, use) => {
     await use(new LoginPage(page));
   },
